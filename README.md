@@ -1,11 +1,3 @@
-```python
-%matplotlib inline
-#%matplotlib notebook
-%reload_ext autoreload
-%autoreload 2
-import matplotlib.pyplot as plt
-```
-
 # Multi-centrality index
 
 ## How to use it and examples 
@@ -41,10 +33,6 @@ python MultiCentralityIndex.py
 ```
 
 
-```python
-!python MultiCentralityIndex.py
-```
-
                 Word       MCI
     0          MAMET  1.501088
     1           PLAY  1.484412
@@ -67,22 +55,7 @@ python MultiCentralityIndex.py
 <b>              ...              </b>
 
 
-
-```python
-import MultiCentralityIndex as mc
-mc.test()
-```
-
-
 ![png](output_8_0.png)
-
-
-
-```python
-from IPython.display import HTML, display
-display(HTML(" Besides, you can import and use the code as your necessity. For example, lets calculate the MCI for the <a href='http://www-personal.umich.edu/~mejn/centrality/' target='_blank'>Coauthorships in network science</a> <table><tr><td><span><b> A figure depicting the largest component of this network</b></span> Extracted from Prof. Newman <a href='http://www-personal.umich.edu/~mejn/netdata' target='_blank'> Web site</a></td><td><img src='http://www-personal.umich.edu/~mejn/centrality/labeleds.png'></td></tr></table>"))
-
-```
 
 
 Besides, you can import and use the code as your necessity. For example, lets calculate the MCI for the <a href='http://www-personal.umich.edu/~mejn/centrality/' target='_blank'>Coauthorships in network science</a> <table><tr><td><span><b> A figure depicting the largest component of this network</b></span> Extracted from Prof. Newman <a href='http://www-personal.umich.edu/~mejn/netdata' target='_blank'> Web site</a></td><td><img src='http://www-personal.umich.edu/~mejn/centrality/labeleds.png'></td></tr></table>
@@ -99,25 +72,6 @@ node_size=[float(G.degree(v)) for v in G]
 #Showing the graph of the full network
 nx.draw_networkx(G, arrows=True, node_size=20, node_color=node_size,edge_color='grey',alpha=.5,with_labels=False)
 ```
-
-
-
-
-
-```python
-import MultiCentralityIndex as mc
-import networkx as nx
-
-#loading the netscience graph
-G = nx.read_gml('netscience.gml',label='label')
-node_size=[float(G.degree(v)) for v in G]
-
-#Showing the graph of the full network
-nx.draw_networkx(G, arrows=True, node_size=20, node_color=node_size,edge_color='grey',alpha=.5,with_labels=False)
-setCentralities = ['Degree','Pagerank','Eigenvector','StructuralHoles','Closeness', 'Betweenness']
-
-```
-
 
 ![png](output_11_0.png)
 
@@ -138,11 +92,6 @@ print(mtxDoc)
 ```
 
 
-```python
-mtxDoc = mc.getMatrixFeaturesGraph(G,setCentralities)
-print(mtxDoc)
-```
-
                      Word    Degree  Pagerank   Eigenvector  StructuralHoles  \
     0         ABRAMSON, G  0.058824  0.139844  4.162192e-16         0.887188   
     1         KUPERMAN, M  0.088235  0.220900  4.325825e-16         0.508935   
@@ -152,12 +101,6 @@ print(mtxDoc)
 
 
 <b>              ...              </b>
-
-
-``` python
-PC1 = mc.getPC1(mtxDoc, setCentralities)
-print(PC1)
-```
 
 
 ```python
@@ -174,16 +117,7 @@ Now, we can calculate the MCI for the graph calling the function
 ``` python 
 N = 10
 MCI_PC1(G, PC1, N)
-```
-
-
-
-
-```python
-N = 10
-MCI = mc.MCI_PC1(G, PC1, N)
-display(MCI)
-#print(MCI)
+print(MCI)
 ```
 
 
