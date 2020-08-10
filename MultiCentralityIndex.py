@@ -11,31 +11,73 @@ import networkx as nx
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
+cntMap = {'Degree':nx.degree_centrality, 'Eigenvector':nx.eigenvector_centrality_numpy, 
+          'StructuralHoles':nx.constraint, 'Pagerank':nx.pagerank_numpy, 
+          'Betweenness':nx.betweenness_centrality,'Closeness':nx.closeness_centrality}
 
-
-def calcCentrality(G,cnt):
-    cntV = list()
-    if cnt == 'Degree':
-        cntV = list(dict(G.degree).values())
-    elif cnt == 'Eigenvector':
-        cntV = list(nx.eigenvector_centrality_numpy(G).values())
-    elif cnt == 'StructuralHoles':
-        cntV = list(nx.constraint(G).values())
-    elif cnt == 'Pagerank':
-        cntV = list(nx.pagerank_numpy(G).values())
-    elif cnt == 'Betweenness':
-        cntV = list(nx.betweenness_centrality(G).values())
-    elif cnt == 'Closeness':
-        cntV = list(nx.closeness_centrality(G).values())
-    else:
-        raise ValueError('calcCettrality: wrong cnt value or not implemented yet')
+def cntV2DF(cntV):
+    return pd.DataFrame(list(cntV.values()))
     
-    return cntV
+def checkNaNs(cntV,cnt):
+    x = 1.0 if cnt == 'StructuralHoles' else 0.0
+    cntV2 = { d:x  if np.isnan(cntV[d]) else cntV[d] for d in cntV}
+    return cntV2
+        
+def calcCentrality(G,cnt):
+    cntV = dict()
+    node_dict = dict(list(dict(G.nodes(data=True)).values())[0])
+    
+    assert cnt in cntMap.keys(), ('calcCettrality: wrong centrality value or not implemented yet. Available:', list(cntMap.keys()))
+    
+    if node_dict.get(cnt) is None:
+        cntV = cntMap[cnt](G)
+        cntV = checkNaNs(cntV,cnt)        
+        nx.set_node_attributes(G, cntV, cnt)
+        
+    return cntV2DF(dict(G.nodes(data=cnt)))
+
+def getMatrixFeaturesGraph(G,cnts):
+    """
+        Computes the matrix (dataframe) of features for a given single graph in the repository,
+        This function is the equivalent to lines 5 - 11 of the Algorithm 1 from:
+        "A multi-centrality index for graph-based keyword extraction"
+        Information Processing & Management. 56. 102063. 10.1016/j.ipm.2019.102063.  
+        
+        
+        Parameters
+        --------
+            G : The networkx graph.                
+            cnts: The list of centrality measures to be considered.
+                  
+                
+        Returns:
+        --------
+        
+            dataframe: A dataframe in whichs rows are nodes and columns the 
+                corresponding values of each centrality measure, which columns names 
+                the respective centralities.
+            
+                
+    """ 
+    
+    sc = MinMaxScaler()
+    mtxDoc = pd.DataFrame()
+    mtxDoc['Word'] = list(G.nodes)
+    
+    for cnt in cnts:
+        val = calcCentrality(G,cnt)        
+        #val = cntV2DF(cval)
+        # Normalizing the data
+        val = sc.fit_transform(val)
+        mtxDoc[cnt] = val
+    
+    return mtxDoc
+
 
 def getPC1(mtxFeatures, setCentralities):
     """
         Computes the first Principal Component from the table of centrality measures,
-        As explained in Algorithm 1 from:
+        As explained in Section '4.4. The MCI approach' from:
         "A multi-centrality index for graph-based keyword extraction"
         Information Processing & Management. 56. 102063. 10.1016/j.ipm.2019.102063.  
         
@@ -101,7 +143,7 @@ def MCI_PC1(G, PC1, N):
     G_Words['Word'] = list(G.nodes)
     G_Words['MCI'] = np.zeros((len(G.nodes),1))
     for cnt in list(PC1):
-        val = pd.DataFrame(calcCentrality(G,cnt))
+        val = calcCentrality(G,cnt)
         # Normalizing the data
         val = sc.fit_transform(val)
         G_Words[cnt] = val
@@ -114,7 +156,7 @@ def MCI_PC1(G, PC1, N):
     else: 
         return keynodes.reset_index(drop=True).head(N)
     
-
+   
  
 if __name__ == "__main__":       
 
@@ -130,7 +172,7 @@ if __name__ == "__main__":
     #Loading a graph-of-word constructed from a file of the respository 
     G=nx.read_edgelist("edgelist_art_and_culture-20914080.txt")
     nx.draw_networkx(G)
-    
+        
     #Number of requested nodes
     N = -1
     
