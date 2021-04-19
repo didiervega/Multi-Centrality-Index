@@ -116,7 +116,7 @@ Now, we can calculate the MCI for the graph calling the function
 
 ``` python 
 N = 10
-MCI_PC1(G, PC1, N)
+MCI = mc.MCI_PC1(G, PC1, N)
 print(MCI)
 ```
 where N means the top N nodes. If N = -1 it returns all the nodes.
