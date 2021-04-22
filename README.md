@@ -161,7 +161,6 @@ mc.getMCI_PCA(G,setCetralities=setCentralities)[:10]
 </div>
 
 
-
 **Note**: In the case of ref[1], we calculated the matrix of features from a collection or set of graphs-of-words of a repository and, then, we computed the first Principal Component (```getPC1``` method) from this matrix of features of the entire repository
 
 Behind the scene, the ```getMCI_PCA``` is calling the ```getPC1FromGraph``` method, which obtains the matrix of centrality measures of the graph (``mtxDoc``) and calls the ```getPC1``` function for computing the first Principal Component (PC1) of the graph.
@@ -173,7 +172,6 @@ For illustration purpose, this is the matrix of features of the graph:
 mtxDoc = mc.getMatrixFeaturesGraph(G,setCentralities)
 display(mtxDoc)
 ```
-
 
 <div>
 <table border="1" class="dataframe">
@@ -193,52 +191,52 @@ display(mtxDoc)
     <tr>
       <th>0</th>
       <td>ABRAMSON, G</td>
-      <td>0.058824</td>
-      <td>0.139844</td>
-      <td>1.418503e-15</td>
-      <td>0.887188</td>
-      <td>0.023195</td>
-      <td>0.000000</td>
+      <td>0.0588</td>
+      <td>0.1398</td>
+      <td>1.418e-15</td>
+      <td>0.8871</td>
+      <td>0.0231</td>
+      <td>0.0000</td>
     </tr>
     <tr>
       <th>1</th>
       <td>KUPERMAN, M</td>
-      <td>0.088235</td>
-      <td>0.220900</td>
-      <td>1.410715e-15</td>
-      <td>0.508935</td>
-      <td>0.030927</td>
-      <td>0.000071</td>
+      <td>0.0882</td>
+      <td>0.2209</td>
+      <td>1.410e-15</td>
+      <td>0.5089</td>
+      <td>0.0309</td>
+      <td>0.00007</td>
     </tr>
     <tr>
       <th>2</th>
       <td>ACEBRON, J</td>
-      <td>0.117647</td>
-      <td>0.142576</td>
-      <td>1.394125e-15</td>
-      <td>0.656586</td>
-      <td>0.041236</td>
-      <td>0.000000</td>
+      <td>0.1176</td>
+      <td>0.1425</td>
+      <td>1.394e-15</td>
+      <td>0.6565</td>
+      <td>0.0412</td>
+      <td>0.0000</td>
     </tr>
     <tr>
       <th>3</th>
       <td>BONILLA, L</td>
-      <td>0.117647</td>
-      <td>0.142576</td>
-      <td>1.396850e-15</td>
-      <td>0.656586</td>
-      <td>0.041236</td>
-      <td>0.000000</td>
+      <td>0.1176</td>
+      <td>0.1425</td>
+      <td>1.397e-15</td>
+      <td>0.6565</td>
+      <td>0.0412</td>
+      <td>0.0000</td>
     </tr>
     <tr>
       <th>4</th>
       <td>PEREZVICENTE, C</td>
-      <td>0.117647</td>
-      <td>0.142576</td>
-      <td>1.419869e-15</td>
-      <td>0.656586</td>
-      <td>0.041236</td>
-      <td>0.000000</td>
+      <td>0.1176</td>
+      <td>0.1425</td>
+      <td>1.420e-15</td>
+      <td>0.6565</td>
+      <td>0.0412</td>
+      <td>0.0000</td>
     </tr>
     <tr>
       <th>...</th>
@@ -253,57 +251,58 @@ display(mtxDoc)
     <tr>
       <th>1584</th>
       <td>MONDRAGON, R</td>
-      <td>0.029412</td>
-      <td>0.142576</td>
-      <td>1.403821e-15</td>
-      <td>0.880552</td>
-      <td>0.010309</td>
-      <td>0.000000</td>
+      <td>0.0294</td>
+      <td>0.1425</td>
+      <td>1.404e-15</td>
+      <td>0.8805</td>
+      <td>0.0103</td>
+      <td>0.0000</td>
     </tr>
     <tr>
       <th>1585</th>
       <td>ZHU, H</td>
-      <td>0.058824</td>
-      <td>0.219644</td>
-      <td>1.405278e-15</td>
-      <td>0.402758</td>
-      <td>0.020618</td>
-      <td>0.000035</td>
+      <td>0.0588</td>
+      <td>0.2196</td>
+      <td>1.405e-15</td>
+      <td>0.4027</td>
+      <td>0.0206</td>
+      <td>0.00003</td>
     </tr>
     <tr>
       <th>1586</th>
       <td>HUANG, Z</td>
-      <td>0.029412</td>
-      <td>0.104042</td>
-      <td>1.407069e-15</td>
-      <td>0.880552</td>
-      <td>0.013745</td>
-      <td>0.000000</td>
+      <td>0.0294</td>
+      <td>0.1040</td>
+      <td>1.407e-15</td>
+      <td>0.8805</td>
+      <td>0.0137</td>
+      <td>0.0000</td>
     </tr>
     <tr>
       <th>1587</th>
       <td>ZHU, J</td>
-      <td>0.029412</td>
-      <td>0.104042</td>
-      <td>1.409720e-15</td>
-      <td>0.880552</td>
-      <td>0.013745</td>
-      <td>0.000000</td>
+      <td>0.0294</td>
+      <td>0.1040</td>
+      <td>1.410e-15</td>
+      <td>0.8805</td>
+      <td>0.0137</td>
+      <td>0.0000</td>
     </tr>
     <tr>
       <th>1588</th>
       <td>ZIMMERMANN, M</td>
-      <td>0.058824</td>
-      <td>0.073159</td>
-      <td>1.422667e-15</td>
-      <td>0.552483</td>
-      <td>0.138159</td>
-      <td>0.000000</td>
+      <td>0.0588</td>
+      <td>0.0731</td>
+      <td>1.423e-15</td>
+      <td>0.5524</td>
+      <td>0.1381</td>
+      <td>0.0000</td>
     </tr>
   </tbody>
 </table>
 <p>1589 rows × 7 columns</p>
 </div>
+
 
 
 And this is the first Principal Component (PC1) of the graph according to all columns (centralities) in the matrix of features
